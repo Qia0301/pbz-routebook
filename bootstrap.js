@@ -6,12 +6,12 @@
   if(!['system','zh','en'].includes(preference))preference='system';
   const locale=preference==='system'?(/^zh/i.test(navigator.language)?'zh':'en'):preference,en=locale==='en';
   if(window.QiaNative?.setLanguage)window.QiaNative.setLanguage(locale);
-  document.documentElement.lang=en?'en':'zh-Hans';document.title=en?'PBZ Routebook · Test':'影之刃零路书 · 测试版';
+  document.documentElement.lang=en?'en':'zh-Hans';document.title=en?'PBZ Routebook · 1.0':'影之刃零路书 · 正式版 1.0';
   const label=en?'Language':'语言';
   const options=()=>[['system',en?'Follow system':'跟随系统'],['zh','中文'],['en','English']].map(([v,l])=>`<option value="${v}" ${v===preference?'selected':''}>${l}</option>`).join('');
   window.PBZ={locale,
     languageButton:()=>`<button class="language-button" data-language-open aria-label="${label}">${en?'EN':'中'}<span aria-hidden="true">⌄</span></button>`,
-    settingsCard:()=>`<section class="settings-card language-card"><h2>${label}</h2><label>${en?'Guide & interface':'攻略与界面'}<select class="language-select" aria-label="${label}">${options()}</select></label><p class="about-text">${en?'Switching keeps your checks, notes and reading position. English names are test translations; expand the original text to compare.':'切换后保留勾选、笔记和阅读位置。英文术语为测试译名，可展开中文原文对照。'}</p><p class="about-text" id="offline-status">${window.QiaNative?(en?'Guide and maps are bundled for offline use.':'攻略与地图已内置，可离线使用。'):(en?'Preparing offline files…':'正在准备离线文件…')}</p>${window.QiaNative?'':`<p class="about-text">${en?'iPhone: Safari → Share → Add to Home Screen. Export a backup before changing devices.':'iPhone：Safari → 分享 → 添加到主屏幕。换设备前请先导出备份。'}</p>`}</section>`,
+    settingsCard:()=>`<section class="settings-card language-card"><h2>${label}</h2><label>${en?'Guide & interface':'攻略与界面'}<select class="language-select" aria-label="${label}">${options()}</select></label><p class="about-text">${en?'Switching keeps your checks, notes and reading position. Expand the original text to compare.':'切换后保留勾选、笔记和阅读位置。可展开中文原文对照。'}</p><p class="about-text" id="offline-status">${window.QiaNative?(en?'Guide and maps are bundled for offline use.':'攻略与地图已内置，可离线使用。'):(en?'Preparing offline files…':'正在准备离线文件…')}</p>${window.QiaNative?'':`<p class="about-text">${en?'iPhone: Safari → Share → Add to Home Screen. Export a backup before changing devices.':'iPhone：Safari → 分享 → 添加到主屏幕。换设备前请先导出备份。'}</p>`}</section>`,
     takeResume:()=>{try{const raw=sessionStorage.getItem(RESUME);sessionStorage.removeItem(RESUME);return raw?JSON.parse(raw):null;}catch(_){return null;}}
   };
   function switchTo(value){
